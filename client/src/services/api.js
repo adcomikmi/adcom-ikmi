@@ -1,9 +1,10 @@
 // client/src/services/api.js
-
 import axios from 'axios';
 
+const BASE = (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim()) || '/api';
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: BASE,
 });
 
 api.interceptors.request.use((config) => {
@@ -19,7 +20,7 @@ export const login = async (nim, password) => {
     const { data } = await api.post('/auth/login', { nim, password });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Terjadi kesalahan';
+    throw error.response?.data?.message || 'Terjadi kesalahan';
   }
 };
 
@@ -28,7 +29,7 @@ export const loginAdmin = async (email, password) => {
     const { data } = await api.post('/auth/login-admin', { email, password });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Terjadi kesalahan';
+    throw error.response?.data?.message || 'Terjadi kesalahan';
   }
 };
 
@@ -39,7 +40,7 @@ export const getMateriTugas = async (page = 1) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil materi';
+    throw error.response?.data?.message || 'Gagal mengambil materi';
   }
 };
 
@@ -53,7 +54,7 @@ export const createMateriTugas = async (formData) => {
     return data;
   } catch (error)
     {
-    throw error.response.data.message || 'Gagal membuat materi';
+    throw error.response?.data?.message || 'Gagal membuat materi';
   }
 };
 
@@ -62,7 +63,7 @@ export const addMember = async (memberData) => {
     const { data } = await api.post('/users/add', memberData);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal menambah anggota';
+    throw error.response?.data?.message || 'Gagal menambah anggota';
   }
 };
 
@@ -75,7 +76,7 @@ export const addBulkMembers = async (formData) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal upload CSV';
+    throw error.response?.data?.message || 'Gagal upload CSV';
   }
 };
 
@@ -84,7 +85,7 @@ export const changePassword = async (newPassword) => {
     const { data } = await api.post('/users/change-password', { newPassword });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal ganti password';
+    throw error.response?.data?.message || 'Gagal ganti password';
   }
 };
 
@@ -93,7 +94,7 @@ export const getMembers = async () => {
     const { data } = await api.get('/users');
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil data anggota';
+    throw error.response?.data?.message || 'Gagal mengambil data anggota';
   }
 };
 
@@ -102,7 +103,7 @@ export const getAllThreads = async () => {
     const { data } = await api.get('/threads');
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil threads';
+    throw error.response?.data?.message || 'Gagal mengambil threads';
   }
 };
 
@@ -111,16 +112,17 @@ export const createThread = async (threadData) => {
     const { data } = await api.post('/threads', threadData);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal membuat thread';
+    throw error.response?.data?.message || 'Gagal membuat thread';
   }
 };
 
 export const getThreadById = async (threadId) => {
+  0
   try {
     const { data } = await api.get(`/threads/${threadId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil detail thread';
+    throw error.response?.data?.message || 'Gagal mengambil detail thread';
   }
 };
 
@@ -129,7 +131,7 @@ export const postReply = async (threadId, konten) => {
     const { data } = await api.post(`/threads/${threadId}/reply`, { konten });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengirim balasan';
+    throw error.response?.data?.message || 'Gagal mengirim balasan';
   }
 };
 
@@ -138,7 +140,7 @@ export const toggleLikeThread = async (threadId) => {
     const { data } = await api.put(`/threads/${threadId}/like`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal like thread';
+    throw error.response?.data?.message || 'Gagal like thread';
   }
 };
 
@@ -147,7 +149,7 @@ export const toggleLikeReply = async (replyId) => {
     const { data } = await api.put(`/replies/${replyId}/like`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal like balasan';
+    throw error.response?.data?.message || 'Gagal like balasan';
   }
 };
 
@@ -156,7 +158,7 @@ export const updateThread = async (threadId, data) => {
     const { data: updatedData } = await api.put(`/threads/${threadId}`, data);
     return updatedData;
   } catch (error) {
-    throw error.response.data.message || 'Gagal update thread';
+    throw error.response?.data?.message || 'Gagal update thread';
   }
 };
 
@@ -165,7 +167,7 @@ export const deleteThread = async (threadId) => {
     const { data } = await api.delete(`/threads/${threadId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal hapus thread';
+    throw error.response?.data?.message || 'Gagal hapus thread';
   }
 };
 
@@ -174,7 +176,7 @@ export const updateReply = async (replyId, data) => {
     const { data: updatedData } = await api.put(`/replies/${replyId}`, data);
     return updatedData;
   } catch (error) {
-    throw error.response.data.message || 'Gagal update balasan';
+    throw error.response?.data?.message || 'Gagal update balasan';
   }
 };
 
@@ -183,7 +185,7 @@ export const deleteReply = async (replyId) => {
     const { data } = await api.delete(`/replies/${replyId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal hapus balasan';
+    throw error.response?.data?.message || 'Gagal hapus balasan';
   }
 };
 
@@ -192,7 +194,7 @@ export const postNestedReply = async (parentReplyId, konten) => {
     const { data } = await api.post(`/replies/${parentReplyId}/reply`, { konten });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengirim balasan bersarang';
+    throw error.response?.data?.message || 'Gagal mengirim balasan bersarang';
   }
 };
 
@@ -201,7 +203,7 @@ export const createFeedback = async (feedbackData) => {
     const { data } = await api.post('/feedback', feedbackData);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengirim feedback';
+    throw error.response?.data?.message || 'Gagal mengirim feedback';
   }
 };
 
@@ -212,7 +214,7 @@ export const getAllFeedback = async (page = 1) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil feedback';
+    throw error.response?.data?.message || 'Gagal mengambil feedback';
   }
 };
 
@@ -221,7 +223,7 @@ export const deleteFeedback = async (feedbackId) => {
     const { data } = await api.delete(`/feedback/${feedbackId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal menghapus feedback';
+    throw error.response?.data?.message || 'Gagal menghapus feedback';
   }
 };
 
@@ -230,7 +232,7 @@ export const getMateriById = async (materiId) => {
     const { data } = await api.get(`/materi/${materiId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil detail materi';
+    throw error.response?.data?.message || 'Gagal mengambil detail materi';
   }
 };
 
@@ -243,7 +245,7 @@ export const updateMateri = async (materiId, formData) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal update materi';
+    throw error.response?.data?.message || 'Gagal update materi';
   }
 };
 
@@ -252,7 +254,7 @@ export const deleteMateri = async (materiId) => {
     const { data } = await api.delete(`/materi/${materiId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal hapus materi';
+    throw error.response?.data?.message || 'Gagal hapus materi';
   }
 };
 
@@ -283,10 +285,9 @@ export const submitTugas = async (tugasId, formData) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal submit tugas';
+    throw error.response?.data?.message || 'Gagal submit tugas';
   }
 };
-
 
 export const getAllSubmissions = async (page = 1) => {
   try {
@@ -295,17 +296,16 @@ export const getAllSubmissions = async (page = 1) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil data submission';
+    throw error.response?.data?.message || 'Gagal mengambil data submission';
   }
 };
-
 
 export const getSubmissionById = async (submissionId) => {
   try {
     const { data } = await api.get(`/submissions/${submissionId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil detail submission';
+    throw error.response?.data?.message || 'Gagal mengambil detail submission';
   }
 };
 
@@ -332,7 +332,7 @@ export const getHomeConfig = async () => {
     const { data } = await api.get('/config/home');
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil config';
+    throw error.response?.data?.message || 'Gagal mengambil config';
   }
 };
 
@@ -345,7 +345,7 @@ export const updateHomeConfig = async (formData) => {
     });
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal update config';
+    throw error.response?.data?.message || 'Gagal update config';
   }
 };
 
@@ -354,7 +354,7 @@ export const getAllChatTemplates = async () => {
     const { data } = await api.get('/chat-templates');
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal mengambil template';
+    throw error.response?.data?.message || 'Gagal mengambil template';
   }
 };
 
@@ -363,7 +363,7 @@ export const createChatTemplate = async (templateData) => {
     const { data } = await api.post('/chat-templates', templateData);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal menyimpan template';
+    throw error.response?.data?.message || 'Gagal menyimpan template';
   }
 };
 
@@ -372,7 +372,7 @@ export const updateChatTemplate = async (templateId, templateData) => {
     const { data } = await api.put(`/chat-templates/${templateId}`, templateData);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal update template';
+    throw error.response?.data?.message || 'Gagal update template';
   }
 };
 
@@ -381,7 +381,7 @@ export const deleteChatTemplate = async (templateId) => {
     const { data } = await api.delete(`/chat-templates/${templateId}`);
     return data;
   } catch (error) {
-    throw error.response.data.message || 'Gagal hapus template';
+    throw error.response?.data?.message || 'Gagal hapus template';
   }
 };
 

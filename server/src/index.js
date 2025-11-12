@@ -1,5 +1,4 @@
 // server/src/index.js
-
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -40,6 +39,10 @@ app.use('/api/submissions', submissionRoutes);
 app.use('/api/config', configRoutes);
 app.use('/api/chat-templates', chatTemplateRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+export default app;
+
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server berjalan di http://localhost:${PORT}`);
+  });
+}
