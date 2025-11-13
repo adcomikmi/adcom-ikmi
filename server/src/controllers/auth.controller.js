@@ -55,9 +55,11 @@ export const googleCallback = (req, res) => {
   
   const userDataString = JSON.stringify(userData);
   
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+  
   res.send(`
     <script>
-      window.opener.postMessage(${userDataString}, 'http://localhost:5173');
+      window.opener.postMessage(${userDataString}, '${clientUrl}');
       window.close();
     </script>
   `);
