@@ -10,7 +10,7 @@ function AdminLogin() {
   const [error, setError] = useState(null);
 
   const handleMessage = useCallback((event) => {
-    if (event.origin === 'http://localhost:5000') {
+    if (event.origin === window.location.origin) {
       const data = event.data;
       if (data && data.token) {
         login(data);
@@ -32,7 +32,7 @@ function AdminLogin() {
     const width = 600, height = 600;
     const left = (window.innerWidth / 2) - (width / 2);
     const top = (window.innerHeight / 2) - (height / 2);
-    const url = 'http://localhost:5000/api/auth/google';
+    const url = '/api/auth/google';
     window.open(
       url,
       'googleLogin',
