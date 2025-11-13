@@ -20,15 +20,15 @@
     },
     {
       "src": "/assets/(.*)",
-      "dest": "client/dist/assets/$1"
+      "dest": "/assets/$1"
     },
     {
       "src": "/logo-adcom.png",
-      "dest": "client/dist/logo-adcom.png"
+      "dest": "/logo-adcom.png"
     },
     {
       "src": "/(.*)",
-      "dest": "client/dist/index.html"
+      "dest": "/index.html"
     }
   ]
 }
